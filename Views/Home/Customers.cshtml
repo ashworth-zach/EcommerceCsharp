@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h1 class="jumbotron text-center bg-light"><a href="/">Dashboard</a> | <a href="/products">Products</a> | <a href="/orders">Orders</a> | Customers | <a href="/settings">Settings (coming soon)</a></h1>
+    <a href="/">HOME</a>
+    <div class="container">
+        <div class="row">
+            @model User
+            <form action="/NewUser" method="post">
+                <span asp-validation-for="@Model.firstname"></span>
+                <label asp-for="@Model.firstname">firstname</label>
+                <input asp-for="@Model.firstname"><br>
+                <span asp-validation-for="@Model.lastname"></span>
+                <label asp-for="@Model.lastname">lastname</label>
+                <input asp-for="@Model.lastname"><br>
+                <input value="Add" type="submit">
+            </form>
+        </div>
+        <table>
+            <th>name</th>
+            <th>date</th>
+            <th>action</th>
+            @foreach (var x in ViewBag.AllUsers){
+            <tr>
+                <td>@x.firstname @x.lastname</td>
+                <td>@x.created_at</td>
+                <td><a href="/remove/@x.UserId">Remove</a></td>
+            </tr>
+        }
+        </table>
+    </div>
+</body>
+
+</html>

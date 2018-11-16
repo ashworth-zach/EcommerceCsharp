@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h1 class="jumbotron text-center bg-light"><a href="/">Dashboard</a> | <a href="/products">Products</a> | Orders | <a href="/customers">Customers</a> | <a href="/settings">Settings (coming soon)</a></h1>
+    <a href="/">HOME</a>
+    <div class="container">
+        <div class="row">
+            @model Order
+            <form action="/NewOrder" method="post">
+                <span asp-validation-for="@Model.UserId"></span>
+                <label asp-for="@Model.UserId">Customer</label>
+                <select asp-for="@Model.UserId">
+                    @foreach (var user in ViewBag.Users){
+                    <option value="@user.UserId">@user.firstname @user.lastname</option>
+                    }
+                </select>
+                    <br>
+                <span asp-validation-for="@Model.quantity"></span>
+                <label asp-for="@Model.quantity">quantity</label>
+                <input asp-for="@Model.quantity"><br>
+                <span asp-validation-for="@Model.ProductId"></span>
+                <label asp-for="@Model.ProductId">Item</label>
+                <select asp-for="@Model.ProductId">
+                    @foreach(var prod in ViewBag.Products){
+                        <option value="@prod.ProductId">@prod.name</option>
+                    }
+                    </select>
+                <input value="Order" type="submit">
+            </form>
+        </div>
+        <table>
+            <th>name</th>
+            <th>product</th>
+            <th>quantity</th>
+            <th>date</th>
+            @foreach(var x in ViewBag.Products)
+            {
+                @foreach(var y in x.orders){
+                    
+            <tr>
+                
+                <td>@y.user.firstname @y.user.lastname</td>
+                
+                <td>@x.name</td>
+                <td>@y.quantity</td>
+                <td>@x.created_at</td>
+            </tr>
+        }
+            }
+        </table>
+    </div>
+</body>
+
+</html>
